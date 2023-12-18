@@ -1,63 +1,74 @@
-# name: Angular CI
+name: Full Stack CI
 
-# on:
-#   push:
-#     branches: [main]
-#   pull_request:
-#     branches: [main]
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
 
-# jobs:
-#   build:
-#     runs-on: ubuntu-latest
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
 
-#     steps:
-#       - uses: actions/checkout@v2
+    steps:
+      - uses: actions/checkout@v2
 
-#       - name: Set up Node.js
-#         uses: actions/setup-node@v2
-#         with:
-#           node-version: "20.x"
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: "20.x"
 
-#       - name: Cache node_modules
-#         uses: actions/cache@v2
-#         with:
-#           path: ~/.npm
-#           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-#           restore-keys: |
-#             ${{ runner.os }}-node-
+      - name: Cache node_modules
+        uses: actions/cache@v2
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
 
-#       - name: Install Dependencies
-#         run: |
-#           cd projet-angular
-#           npm ci
+      # Frontend steps
+      - name: Install Frontend Dependencies
+        run: |
+          cd frontend  # Assurez-vous que le chemin d'accès est correct
+          npm ci
 
-#       - name: Setup Chrome Headless
-#         run: |
-#           sudo apt-get update
-#           sudo apt-get install -yq libgconf-2-4
-#           sudo apt-get install -yq google-chrome-stable
+      - name: Lint Frontend
+        run: |
+          cd frontend
+          npx ng lint
 
-#       - name: Run Linter
-#         run: |
-#           cd projet-angular
-#           npx ng lint
+      - name: Format Frontend
+        run: |
+          cd frontend
+          npx prettier --write .
 
-#       - name: Run Prettier Writer
-#         run: |
-#           cd projet-angular
-#           npx prettier --write .
+      - name: Test Frontend
+        run: |
+          cd frontend
+          npm run test -- --no-watch --no-progress --browsers=ChromeHeadlessCI
 
-#       - name: Run Prettier Check
-#         run: |
-#           cd projet-angular
-#           npx prettier --check .
+      - name: Build Frontend
+        run: |
+          cd frontend
+          npx ng build --aot
 
-#       - name: Run Tests
-#         run: |
-#           cd projet-angular
-#           npx ng test --watch=false --browsers=ChromeHeadless --code-coverage
+      # Backend steps
+      - name: Install Backend Dependencies
+        run: |
+          cd backend  # Assurez-vous que le chemin d'accès est correct
+          npm ci
 
-#       - name: Build Project
-#         run: |
-#           cd projet-angular
-#           npx ng build --aot
+      - name: Lint Backend
+        run: |
+          cd backend
+          npm run lint  # Assurez-vous que vous avez un script de linting configuré
+
+      - name: Test Backend
+        run: |
+          cd backend
+          npm test  # Assurez-vous que vos tests sont configurés
+
+      - name: Build Backend
+        run: |
+          cd backend
+          npm run build  # Assurez-vous que vous avez un script de build configuré
