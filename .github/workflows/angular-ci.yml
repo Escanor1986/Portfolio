@@ -29,8 +29,15 @@ jobs:
       # Frontend steps
       - name: Install Frontend Dependencies
         run: |
-          cd frontend  # Assurez-vous que le chemin d'accès est correct
+          cd frontend  
           npm ci
+
+      - name: Setup Chrome Headless
+        run: |
+          cd frontend  
+          sudo apt-get update
+          sudo apt-get install -yq libgconf-2-4
+          sudo apt-get install -yq google-chrome-stable
 
       - name: Lint Frontend
         run: |
@@ -42,10 +49,15 @@ jobs:
           cd frontend
           npx prettier --write .
 
+      - name: Run Prettier Check
+        run: |
+          cd frontend
+          npx prettier --check .
+
       - name: Test Frontend
         run: |
           cd frontend
-          npm run test -- --no-watch --no-progress --browsers=ChromeHeadlessCI
+          npx ng test --watch=false --browsers=ChromeHeadless --code-coverage
 
       - name: Build Frontend
         run: |
@@ -55,20 +67,30 @@ jobs:
       # Backend steps
       - name: Install Backend Dependencies
         run: |
-          cd backend  # Assurez-vous que le chemin d'accès est correct
+          cd backend  
           npm ci
 
       - name: Lint Backend
         run: |
           cd backend
-          npm run lint  # Assurez-vous que vous avez un script de linting configuré
+          npm run lint
+
+      - name: Format Frontend
+        run: |
+          cd frontend
+          npx prettier --write .
+
+      - name: Run Prettier Check
+        run: |
+          cd frontend
+          npx prettier --check .
 
       - name: Test Backend
         run: |
           cd backend
-          npm test  # Assurez-vous que vos tests sont configurés
+          npm test
 
       - name: Build Backend
         run: |
           cd backend
-          npm run build  # Assurez-vous que vous avez un script de build configuré
+          npm run build

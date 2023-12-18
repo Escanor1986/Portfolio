@@ -3,7 +3,10 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www"
+    "start": "node ./bin/www",
+    "format": "prettier --write .",
+    "lint": "eslint .",
+    "test": "mocha"
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",
@@ -12,5 +15,11 @@
     "jsonwebtoken": "^9.0.2",
     "morgan": "~1.9.1",
     "mysql": "^2.18.1"
+  },
+  "devDependencies": {
+    "chai": "^4.3.10",
+    "eslint": "^8.56.0",
+    "mocha": "^10.2.0",
+    "prettier": "^3.1.1"
   }
 }
