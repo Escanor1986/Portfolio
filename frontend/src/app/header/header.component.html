@@ -1,0 +1,19 @@
+<header class="navbar">
+  <div class="logo-container">
+    <img src="../../assets/logo1.png" alt="Logo" class="logo" />
+  </div>
+
+  <nav class="nav-container">
+    <ul ngbNav #nav="ngbNav" class="nav-tabs">
+      <li ngbNavItem>
+        <button ngbNavLink>Sign Up</button>
+        <ng-template ngbNavContent>First content</ng-template>
+      </li>
+      <li ngbNavItem>
+        <button ngbNavLink>Login</button>
+        <ng-template ngbNavContent>Second content</ng-template>
+      </li>
+    </ul>
+    <div [ngbNavOutlet]="nav"></div>
+  </nav>
+</header>

@@ -1,0 +1,57 @@
+.auth-container {
+  padding-top: 60px; // Hauteur du header
+  padding-bottom: 60px; // Hauteur du footer
+  min-height: calc(
+    100vh - 120px
+  ); // Hauteur totale de la vue moins celle du header et du footer
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #121212;
+
+  .auth-form {
+    background-color: #1e1e1e;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    color: #21f3d6;
+
+    h2 {
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+
+      input {
+        padding: 10px;
+        border: 1px solid #21f3d6;
+        border-radius: 4px;
+        background-color: transparent;
+        color: #fff;
+
+        &::placeholder {
+          color: #aaa;
+        }
+      }
+
+      button {
+        padding: 10px;
+        border: none;
+        border-radius: 4px;
+        background-color: #47daff;
+        color: #fff;
+        cursor: pointer;
+        transition: background-color 0.3s;
+
+        &:hover {
+          background-color: darken(#21f3d6, 10%);
+        }
+      }
+    }
+  }
+}

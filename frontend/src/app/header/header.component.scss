@@ -1,0 +1,68 @@
+$dark-bg: #121212;
+$neon-color: #21f3d6;
+$git-repo-color: #ff4757;
+
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+}
+
+// navigation
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #121212;
+  padding: 10px 20px;
+
+  .logo-container {
+    .logo {
+      height: 50px;
+      border-radius: 50%;
+    }
+  }
+
+  .nav-container {
+    .nav-tabs {
+      background-color: $dark-bg;
+      border-bottom: 2px solid $neon-color;
+
+      button {
+        background-color: transparent;
+        border: none;
+        color: $neon-color;
+        padding: 10px 15px;
+        font-size: 16px;
+        transition: background-color 0.3s, color 0.3s;
+
+        &:hover {
+          background-color: $neon-color;
+          color: $dark-bg;
+          cursor: pointer;
+        }
+
+        &:focus {
+          box-shadow: none;
+        }
+      }
+
+      .active {
+        button {
+          background-color: $git-repo-color;
+          color: $dark-bg;
+        }
+      }
+    }
+  }
+}
+
+[ngbNavOutlet] {
+  padding: 15px;
+  background-color: $dark-bg;
+  color: $neon-color;
+  border: 1px solid $neon-color;
+  margin-top: -1px;
+}
